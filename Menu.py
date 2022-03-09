@@ -24,7 +24,7 @@ while True:
     print("4. Delete a Student")
     print("5. View all Students")
     print("6. EXIT ")
-    print("7. Show Tables")
+
 
     choice=int(input("Enter  a Choice ? "))
 
@@ -90,9 +90,7 @@ while True:
         connection.close()
         break
 
-    elif choice==7:
-        result=connection.execute("SELECT name from sqlite_master WHERE type='table'").fetchall()
-        print(result)
+
 
     else:
         print("Invalid Choice")
