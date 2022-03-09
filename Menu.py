@@ -1,5 +1,8 @@
 import sqlite3
 
+from prettytable import PrettyTable
+
+
 connection = sqlite3.connect("college.db")
 
 listOfTables=connection.execute("SELECT name from sqlite_master WHERE type='table' AND name='STUDENT' ").fetchall()
@@ -77,14 +80,13 @@ while True:
     elif choice == 5:
 
         result = connection.execute("SELECT * FROM STUDENT")
+        t = PrettyTable([ 'Id','Name', 'Roll Number' ,'Admno', 'College'])
+
 
         for i in result:
-            print("id =>", i[0])
-            print("Name => ", i[1])
-            print("Roll Number =>", i[2])
-            print("Admno =>  ", i[3])
+            t.add_row([i[0],i[1],i[2],i[3],i[4]])
 
-            print("College => ", i[4])
+        print(t)
 
     elif choice == 6:
         connection.close()
