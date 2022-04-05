@@ -1,14 +1,12 @@
 import sqlite3
-
 from prettytable import PrettyTable
-
 
 connection = sqlite3.connect("college.db")
 
 listOfTables=connection.execute("SELECT name from sqlite_master WHERE type='table' AND name='STUDENT' ").fetchall()
 
 if listOfTables!=[]:
-    print("Table Already There ! ")
+    print("Table Already Exists ! ")
 else:
     connection.execute(''' CREATE TABLE STUDENT(
                         ID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -44,16 +42,13 @@ while True:
 
 
     elif choice == 2:
-        getRoll=input("Enter a Roll number to the searched ")
-        result = connection.execute("SELECT * FROM STUDENT WHERE ROLLNUMBER="+getRoll)
+        getName = input("Enter the name   ")
 
+        result = connection.execute("SELECT * FROM STUDENT WHERE NAME LIKE '%"+getName+"%'")
+        table = PrettyTable(["Id", "Student Name", "Roll Number", "Admission Number", "College"])
         for i in result:
-            print("id =>", i[0])
-            print("Name => ", i[1])
-            print("Roll Number =>", i[2])
-            print("Admno =>  ", i[3])
-
-            print("College => ", i[4])
+            table.add_row([ i[0],i[1],i[2],i[3],i[4] ])
+        print(table)
 
     elif choice == 3:
         getRoll = input("Enter Roll Number to be Updated ? ")
@@ -80,13 +75,11 @@ while True:
     elif choice == 5:
 
         result = connection.execute("SELECT * FROM STUDENT")
-        t = PrettyTable([ 'Id','Name', 'Roll Number' ,'Admno', 'College'])
 
-
+        table = PrettyTable(["Id","Name","Roll Number","Admission Number","College"])
         for i in result:
-            t.add_row([i[0],i[1],i[2],i[3],i[4]])
-
-        print(t)
+            table.add_row([ i[0],i[1],i[2],i[3],i[4] ])
+        print(table)
 
     elif choice == 6:
         connection.close()
